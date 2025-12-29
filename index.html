@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ниже</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+        
+        .text-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .signature {
+            margin-top: 20px;
+            text-align: right;
+            font-weight: bold;
+        }
+        
+        .timer-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .timer-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .timer-unit {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            min-width: 80px;
+        }
+        
+        .timer-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+        }
+        
+        .timer-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .timer-unit {
+                min-width: 70px;
+                padding: 12px;
+            }
+            
+            .timer-value {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="text-container">
+        <p>Привет,</p>
+        <p>я не думал, что так <span class="quote">"повезет"</span>...</p>
+        <p>и с вероятностью 4% ты выпадешь мне.</p>
+        <p>короче, ладно...</p>
+        <p>счастья, здоровья и т.д.</p>
+        <p>с новым годом</p>
+        
+        <div class="signature">— санта который тайный</div>
+    </div>
+    
+    <div class="timer-container">
+        <div class="timer-title">До Нового 2026 года осталось:</div>
+        <div class="timer">
+            <div class="timer-unit">
+                <span id="days" class="timer-value">00</span>
+                <span class="timer-label">дней</span>
+            </div>
+            <div class="timer-unit">
+                <span id="hours" class="timer-value">00</span>
+                <span class="timer-label">часов</span>
+            </div>
+            <div class="timer-unit">
+                <span id="minutes" class="timer-value">00</span>
+                <span class="timer-label">минут</span>
+            </div>
+            <div class="timer-unit">
+                <span id="seconds" class="timer-value">00</span>
+                <span class="timer-label">секунд</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTimer() {
+            // Получаем текущую дату
+            const now = new Date();
+            
+            // Устанавливаем дату Нового 2026 года
+            const newYear2026 = new Date('January 1, 2026 00:00:00');
+            
+            // Вычисляем разницу во времени в миллисекундах
+            const timeDiff = newYear2026 - now;
+            
+            // Если Новый год уже наступил
+            if (timeDiff <= 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                document.querySelector('.timer-title').textContent = 'С Новым 2026 годом! 🎉';
+                return;
+            }
+            
+            // Вычисляем дни, часы, минуты и секунды
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            
+            // Обновляем значения на странице
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Обновляем таймер сразу при загрузке страницы
+        updateTimer();
+        
+        // Затем обновляем каждую секунду
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
